@@ -1,0 +1,5 @@
+torch==2.1.0
+torchdata==0.7.0
+torchtext==0.16.0
+portalocker==2.7.0
+--index-url=https://markovml:ha95HRmXKv9vXNSs@pypi.markovml.com/simple markovml
