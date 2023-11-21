@@ -9,7 +9,7 @@ Steps to get the Project name
     * Select the Project which you want to use for the Model Training
     * Copy the Project name which we will use in the below code
 
-PROJECT_NAME = "Govini Test Project"
+PROJECT_NAME = "YOUR Test Project"
 Steps to get the Model name
     * Choose a model name for your model
     * A new model will be created with this name if it doesn't exist
@@ -58,8 +58,8 @@ my_inference_model = InferencePipeline(
 )
 
 
-# This is an `optional step`. This is required if you want to do any type of post-processing on top
-# of your model inference. For example your model is returning 0/1 and you want to map it to NEGATIVE/POSITIVE
+# This is an `optional step`. This is required if you want to do any post-processing on top
+# of your model inference. For example, your model is returning 0/1, and you want to map it to NEGATIVE/POSITIVE
 def post_process(prediction):
     ag_news_label = {1: "World", 2: "Sports", 3: "Business", 4: "Sci/Tec"}
     prediction_int = prediction.argmax(1).item() + 1
