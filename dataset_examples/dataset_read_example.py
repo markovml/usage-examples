@@ -1,0 +1,21 @@
+"""
+This example has the code for the following
+
+1. Accessing Your Registered Dataset with MarkovML using SDK
+
+"""
+from markov.api.data.data_set import DataSet, DatasetQuality
+
+import markov
+
+# The dataset that is registered with Markov has a dataset_id. You can use that to fetch the dataset
+ds: DataSet = markov.dataset.get_by_id(dataset_id='<YOUR_DATA_SET_ID>')
+
+# To get the dataframe # Return the dataframe from the dataset
+# Fetch the given segment (train/test/validate/unknown) as dataframe
+df_unknown = ds.unknown.as_df()  # here we did not segment dataset as such the available segment is unknown
+
+# filter the dataframe with only columns that were registered as features during registration
+ds_features = df_unknown[ds.features]
+
+# you can do any further operation on the dataframe.
