@@ -42,12 +42,15 @@ from markov.library.mlflow_helper import MarkovSupportedFlavours
 import pandas as pd
 from train_model import get_trained_model
 
-# THis is the code to train your model. In this example we have trained a custom model on AG NEWS data .
-# The code is in `train_model.py`
+# This is the code to train your custom-model. In this example we have trained a custom model on AG NEWS data .
+# The code is in `train_model.py` file in the model_examples folder
 model = get_trained_model()
 
 # To create a model app you'll need to provide samples from your test/train set.
+# You can sample some rows from your test/train dataframe to register with MarkovML.
 samples = ["Generative AI has been impacting the industry trends at a very fast pace."]
+# Note the content here is the feature column in AG News Dataset,
+# you just need to provide a dataframe with a few examples.
 sample_input = pd.DataFrame([{"content": samples}])
 
 # This is your inference pipeline
@@ -79,7 +82,8 @@ my_inference_model.add_pipeline_stage(
 
 
 # MarkovML helps organize your models into projects. To do so, you can use an existing project or create new.
-
+# This is a helper function to create a new project of fetch an existing one.
+# More details are here: https://developer.markovml.com/docs/start-with-a-project
 def get_or_create_project(project_name, description: str = ""):
     """
     This is a helper function to get the project by name and if the project does not exist, create one with that name.
