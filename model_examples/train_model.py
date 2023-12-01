@@ -11,7 +11,6 @@ Requirments to be installed before running the custom model
 import time
 from dataclasses import dataclass
 
-import pandas as pd
 import torch
 from torch import nn
 from torch.utils.data import DataLoader
@@ -27,11 +26,11 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 # The code below is your Train
 class DatasetHandler:
     def __init__(
-            self,
-            training_data_iterator,
-            testing_data_iterator,
-            batch_size: int,
-            train_split_percent: float = 0.95,
+        self,
+        training_data_iterator,
+        testing_data_iterator,
+        batch_size: int,
+        train_split_percent: float = 0.95,
     ):
         self._tokenizer = get_tokenizer("basic_english")
         self._vocab = self._build_vocabulary(training_data_iterator)
@@ -141,10 +140,10 @@ class ModelTrainingSettings:
 
 class ModelTrainer:
     def __init__(
-            self,
-            model: nn.Module,
-            dataset_handler: DatasetHandler,
-            settings: ModelTrainingSettings,
+        self,
+        model: nn.Module,
+        dataset_handler: DatasetHandler,
+        settings: ModelTrainingSettings,
     ):
         self._training_settings = settings
         self._model = model
