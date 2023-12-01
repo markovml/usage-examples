@@ -39,6 +39,7 @@ data_set = DataSet.from_filepath(
     data_category=DataCategory.Text,  # dataset category (Text: If any of the feature column is text)
     train_source="twitter_train.csv",  # train dataset segment filepath
     test_source="twitter_test.csv",  # test dataset segment filepath
+    validate_source=None,  # validate dataset segment set to None if not present
 )
 
 # Register Dataset

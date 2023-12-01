@@ -37,10 +37,10 @@ cred_id = cred_response.credential_id
 # Create final dataset object formed from cloud upload path
 # Select the x_col_names which are the features and the y_name as the target while registering the dataset
 
-# Note: Populate the fields ["<SELECTED FEATURE 01", "<SELECTED FEATURE 02"], <TARGET>, s3://<path_to_train_dataset>
+# Note: Populate the fields ["<SELECTED FEATURE 01>", "<SELECTED FEATURE 02"], <TARGET>, s3://<path_to_train_dataset>
 data_set = DataSet.from_cloud(
     df_id=df_response.df_id,  # data family id
-    x_col_names=["<SELECTED FEATURE 01", "<SELECTED FEATURE 02"],  # feature columns
+    x_col_names=["<SELECTED FEATURE 01>", "<SELECTED FEATURE 02"],  # feature columns
     y_name="<TARGET>",  # target column
     delimiter=",",  # delimiter used for the input dataset segments
     name="CloudUploadSDK_01",  # dataset name (should be unique)
@@ -51,7 +51,8 @@ data_set = DataSet.from_cloud(
     train_source="s3://<path_to_train_dataset>",
     # path to the dataset segment in s3 bucket, keep none if unsplit
     test_source="s3://<path_to_test_dataset>",  # path to the dataset segment in s3 bucket
-    unsplit_source="s3://<path_to_dataset>",  # set path here if your dataset is unsplit keep None if train or test is supplied
+    # set path here if your dataset is unsplit keep None if train or test is supplied
+    unsplit_source="s3://<path_to_dataset>",
 )
 
 # Register Dataset. This is the actual call to upload and register dataset with MarkovML

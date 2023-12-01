@@ -16,7 +16,7 @@ ds: DataSet = markov.dataset.get_by_id(dataset_id="<YOUR_DATA_SET_ID>")
 # for example to get the train dataframe you can do df_train = ds.train.as_df()
 df_stored = (
     ds.unsplit.as_df()
-)  # here we did not segment dataset as such the available segment is unslit
+)  # here we did not segment dataset as such the available segment is unsplit
 
 # You can also get train, test split using this code
 train_df, test_df = ds.get_train_test_split()

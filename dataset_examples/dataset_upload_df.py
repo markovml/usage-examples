@@ -39,13 +39,14 @@ data_set = DataSet.from_dataframe(
     x_col_names=["tweet"],  # features column
     y_name="sentiment",  # target column
     delimiter=",",  # delimiter used in the dataset
-    name="DataframeUploadSDK_02",  # dataset name (should be unique)
+    name="DataframeUploadSDK_03",  # dataset name (should be unique)
     data_category=DataCategory.Text,
     # dataset category (Text, Numeric, Categorical) (
     # here if any of feature column is text we categorize it as Text data category)
     train_source=train_df,  # train dataset segment, set to None if your dataset is unsplit
     test_source=test_df,  # train dataset segment, set to None if your dataset is unsplit
-    unsplit_source=None,  # test dataset segment  # if your dataset is unsplit use unsplit_source = unsplit_df
+    validate_source=None,  # validate dataset segment set to None if not present
+    unsplit_source=None,  # if your dataset is unsplit use unsplit_source = unsplit_df
 )
 # Register Dataset
 ds_response: DataSetRegistrationResponse = data_set.upload()
