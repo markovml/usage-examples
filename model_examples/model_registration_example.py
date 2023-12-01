@@ -28,7 +28,7 @@ Once we successfully run the custom model, we can check it out on the UI
 
 """
 import markov
-# code to train the model. In the example we have sample code to train a model in `train_model.py`
+import pandas as pd
 
 # markov imports
 from markov.api.models.artifacts.base import (
@@ -39,8 +39,10 @@ from markov.api.models.artifacts.base import (
 from markov.api.models.artifacts.inference_pipeline import InferencePipeline
 from markov.library.dependencies_helper import pytorch_pip_requirements
 from markov.library.mlflow_helper import MarkovSupportedFlavours
-import pandas as pd
 from train_model import get_trained_model
+
+# code to train the model. In the example we have sample code to train a model in `train_model.py`
+
 
 # This is the code to train your custom-model. In this example we have trained a custom model on AG NEWS data .
 # The code is in `train_model.py` file in the model_examples folder
@@ -100,12 +102,14 @@ def get_or_create_project(project_name, description: str = ""):
     return mkv_project
 
 
-project = get_or_create_project('demo_ag_news', description='This is a demo project to work on AG Dataset')
+project = get_or_create_project(
+    "demo_ag_news", description="This is a demo project to work on AG Dataset"
+)
 
 # Create a Model Metadata on MarkovML
 mkv_model = project.create_model(
-    model_name='<YOUR_MODEL_NAME>',
-    model_description='This model using Pytorch Text classifier to train a model on AG dataset'
+    model_name="<YOUR_MODEL_NAME>",
+    model_description="This model using Pytorch Text classifier to train a model on AG dataset",
 )
 mkv_model.register()  # this registers the model metadata with MarkovML
 

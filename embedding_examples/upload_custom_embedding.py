@@ -5,7 +5,7 @@ from markov import EmbeddingRecorder
 
 """
 This example demonstrates how to upload a custom embedding for a registered dataset with Markov.
-To run this recorder you'll need your dataframe in this format 
+To run this recorder you'll need your dataframe in this format
 _______________________
 |FEATURES  | EMBEDDING|
 |_____________________|
@@ -21,7 +21,8 @@ df = dataset.unsplit.as_df()
 
 # STEP 2 -> CREATE EMBEDDING RECORDER to upload embedding to MarkovML
 embedding_recorder = EmbeddingRecorder(
-    name="<Add notes on this embedding, for example how it was generated etc.>", dataset_id=" <YOUR_DATASET_ID>"
+    name="<Add notes on this embedding, for example how it was generated etc.>",
+    dataset_id=" <YOUR_DATASET_ID>",
 )
 embedding_recorder.register()
 
