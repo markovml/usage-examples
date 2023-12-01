@@ -259,4 +259,4 @@ def get_trained_model():
     )
 
     model_trainer.train()
-    return model_trainer
+    return model_trainer.model
