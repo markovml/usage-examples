@@ -84,8 +84,9 @@ my_inference_model.add_pipeline_stage(
     stage=MarkovPyfunc(name="post_process", pyfunc=post_process)
 ).add_pip_requirements(
     pytorch_pip_requirements()
+).add_dependent_code(
+    code_paths=['../train_model.py']
 )
-
 
 # MarkovML helps organize your models into projects. To do so, you can use an existing project or create new.
 # This is a helper function to create a new project of fetch an existing one.
@@ -112,7 +113,7 @@ project = get_or_create_project(
 
 # Create a Model Metadata on MarkovML
 mkv_model = project.create_model(
-    model_name="<YOUR_MODEL_NAME>",
+    model_name="News-Classifier-Pytorch",
     model_description="This model using Pytorch Text classifier to train a model on AG dataset",
 )
 mkv_model.register()  # this registers the model metadata with MarkovML
