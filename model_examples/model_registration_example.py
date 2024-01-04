@@ -55,10 +55,14 @@ samples = ["Generative AI has been impacting the industry trends at a very fast 
 # you just need to provide a dataframe with a few examples.
 sample_input = pd.DataFrame([{"content": samples}])
 
+# You can use the utility `infer_schema_and_samples_from_dataframe` to convert your input dataframe
+# into schema and samples in the format accepted by Markov backend
+schema, samples = infer_schema_and_samples_from_dataframe(sample_input)
+
 # This is your inference pipeline
 my_inference_model = InferencePipeline(
     name="pytorch-text-classifier-demo",
-    schema=infer_schema_and_samples_from_dataframe(sample_input),
+    schema=schema,
     samples=samples,
 )
 
