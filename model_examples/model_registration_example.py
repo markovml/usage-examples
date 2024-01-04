@@ -34,7 +34,7 @@ import pandas as pd
 from markov.api.models.artifacts.base import (
     MarkovPredictor,
     MarkovPyfunc,
-    infer_schema_from_dataframe,
+    infer_schema_and_samples_from_dataframe,
 )
 from markov.api.models.artifacts.inference_pipeline import InferencePipeline
 from markov.library.dependencies_helper import pytorch_pip_requirements
@@ -58,7 +58,7 @@ sample_input = pd.DataFrame([{"content": samples}])
 # This is your inference pipeline
 my_inference_model = InferencePipeline(
     name="pytorch-text-classifier-demo",
-    schema=infer_schema_from_dataframe(sample_input),
+    schema=infer_schema_and_samples_from_dataframe(sample_input),
     samples=samples,
 )
 
