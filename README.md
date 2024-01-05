@@ -38,3 +38,6 @@ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
 rm -rf ~/miniconda3/miniconda.sh
 `
+
+# Run all examples using tox
+https://gist.github.com/kushagra7589/c361e8a96a2f4309fd0dfa4409a76263
