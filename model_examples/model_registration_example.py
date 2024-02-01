@@ -27,6 +27,8 @@ Once we successfully run the custom model, we can check it out on the UI
     * You can start using the app by providing any input
 
 """
+import os.path
+
 import markov
 import pandas as pd
 
@@ -75,6 +77,12 @@ def post_process(prediction):
     return ag_news_label[prediction_int]
 
 
+def get_current_directory_path():
+    from inspect import getsourcefile
+    directory_path = os.path.basename(os.path.abspath(getsourcefile(lambda : 0)))
+    return directory_path
+
+
 # Add stages to the Inference Pipeline
 my_inference_model.add_pipeline_stage(
     stage=MarkovPredictor(
@@ -85,8 +93,9 @@ my_inference_model.add_pipeline_stage(
 ).add_pip_requirements(
     pytorch_pip_requirements()
 ).add_dependent_code(
-    code_paths=['../train_model.py']
+    code_paths=[os.path.join(get_current_directory_path(), 'train_model.py')]
 )
+
 
 # MarkovML helps organize your models into projects. To do so, you can use an existing project or create new.
 # This is a helper function to create a new project of fetch an existing one.
@@ -107,14 +116,38 @@ def get_or_create_project(project_name, description: str = ""):
     return mkv_project
 
 
+def get_or_create_model(project_id, model_name, description: str = ""):
+    """
+    This is a helper function to get the project by name and if the project does not exist, create one with that name.
+    :param project_id: The project in which the model needs be fetched / created
+    :param model_name: Model name (string)
+    :param description: Friendly description of the Model and its purpose. This is helpful for other members to
+    know the purpose and helps in easy discovery.
+    :return: Model object
+    """
+    try:
+        mkv_project = markov.Model.get_by_name(project_id, model_name=model_name)
+    except markov.exceptions.ResourceNotFoundException:
+        mkv_project = markov.Model(name=model_name, project_id=project_id, description=description)
+        mkv_project.register()
+    return mkv_project
+
+
+PROJECT_NAME = "demo_ag_news"
+
+
 project = get_or_create_project(
-    "demo_ag_news", description="This is a demo project to work on AG Dataset"
+    PROJECT_NAME, description="This is a demo project to work on AG Dataset"
 )
 
+
+MODEL_NAME = "News-Classifier-Pytorch"
+
 # Create a Model Metadata on MarkovML
-mkv_model = project.create_model(
-    model_name="News-Classifier-Pytorch",
-    model_description="This model using Pytorch Text classifier to train a model on AG dataset",
+mkv_model = get_or_create_model(
+    project_id=project.project_id,
+    model_name=MODEL_NAME,
+    description="This model using Pytorch Text classifier to train a model on AG dataset",
 )
 mkv_model.register()  # this registers the model metadata with MarkovML
 

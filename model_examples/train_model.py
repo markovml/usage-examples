@@ -1,6 +1,6 @@
 """
 PRE_REQUISITE TO RUN THIS EXAMPLE
-Requirments to be installed before running the custom model
+Requirements to be installed before running the custom model
     !pip install torch==2.1.0
     !pip install torchdata==0.7.0
     !pip install torchtext==0.16.0
@@ -223,10 +223,15 @@ class ModelTrainer:
 
     def predict(self, text):
         with torch.no_grad():
+            # preprocess text
             text = torch.tensor(self._dataset_handler.process_text(text))
+            # predict using pytorch model
             output = self._model(text, torch.tensor([0]))
+            # get prediction label
             prediction = output.argmax(1).item()
+            # convert integer label to meaningful label
             ag_news_label = {1: "World", 2: "Sports", 3: "Business", 4: "Sci/Tec"}
+            # return meaningful label
             return ag_news_label[prediction]
 
 
