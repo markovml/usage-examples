@@ -18,6 +18,7 @@ except ImportError:
 
 import os
 import markov
+from markov.data_models.model import ModelRegistryStageStates
 
 # get_dataset
 X, y = datasets.load_iris(return_X_y=True)
@@ -93,3 +94,21 @@ loaded_mkv_model.download_model_files(local_destination_path=download_model_path
 # load your model using your own loaders
 trained_model = joblib.load(os.path.join(download_model_path, local_model_filename))
 y_pred = trained_model.predict(X_test)
+
+
+# Model registry operations
+if markov.__version__ <= '2.0.2':
+    import logging
+    import sys
+    logging.warning("Model registry operations run only on markov version >= 2.0.3")
+    sys.exit(0)
+
+REGISTRY_NAME = "Test Registry"
+loaded_mkv_model.link_to_registry(registry_name=REGISTRY_NAME)
+
+loaded_mkv_model.update_model_stage_in_registry(to_stage=ModelRegistryStageStates.DEV)
+
+# other available commands:
+# ModelRegistry.get_all()
+# ModelRegistry.get_by_id(registry_id="")
+# ModelRegistry.get_by_name(registry_name="")
