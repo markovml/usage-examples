@@ -87,10 +87,6 @@ def get_current_directory_path():
 
 # Add stages to the Inference Pipeline
 my_inference_model.add_pipeline_stage(
-    stage=MarkovPyfunc(
-        name="preprocess", pyfunc=model._dataset_handler.process_text
-    )
-).add_pipeline_stage(
     stage=MarkovPredictor(
         name="pytorch_predictor", model=model, flavour=MarkovSupportedFlavours.PYTORCH
     )
@@ -161,4 +157,4 @@ mkv_model = get_or_create_model(
 mkv_model.register()  # this registers the model metadata with MarkovML
 
 # register the model artifact (YOUR TRAINED MODEL)
-my_inference_model.register(model_id=mkv_model.model_id)   # feedback: if you don't provide model-id, create new model
+my_inference_model.register(model_id=mkv_model.model_id)

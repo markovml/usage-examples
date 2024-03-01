@@ -81,8 +81,6 @@ mkv_model = get_or_create_model(project_id=project.project_id, model_name=MODEL_
 
 mkv_model.upload_model_files(local_file_paths=local_model_filename)
 
-# feedback: show the location of uploaded files on UI
-
 # Download the files from markov
 # You can run the following in a separate file
 loaded_mkv_model = markov.Model.get_by_name(project_id=project.project_id, model_name=MODEL_NAME)
