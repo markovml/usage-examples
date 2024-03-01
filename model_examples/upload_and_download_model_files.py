@@ -1,3 +1,5 @@
+from typing import List
+
 try:
     import sklearn
 except ImportError:
@@ -79,6 +81,7 @@ mkv_model = get_or_create_model(project_id=project.project_id, model_name=MODEL_
 
 mkv_model.upload_model_files(local_file_paths=local_model_filename)
 
+# feedback: show the location of uploaded files on UI
 
 # Download the files from markov
 # You can run the following in a separate file
@@ -104,6 +107,10 @@ if markov.__version__ <= '2.0.2':
     sys.exit(0)
 
 REGISTRY_NAME = "Test Registry"
+
+# Note: Creation of registry is through UI
+# Going forward: Creation of registry supported SDK as well
+
 loaded_mkv_model.link_to_registry(registry_name=REGISTRY_NAME)
 
 loaded_mkv_model.update_model_stage_in_registry(to_stage=ModelRegistryStageStates.DEV)
@@ -112,3 +119,13 @@ loaded_mkv_model.update_model_stage_in_registry(to_stage=ModelRegistryStageState
 # ModelRegistry.get_all()
 # ModelRegistry.get_by_id(registry_id="")
 # ModelRegistry.get_by_name(registry_name="")
+
+loaded_mkv_model.add_metadata(
+    metadata={
+        "tag": "latest",
+        "fix_version": "2024.02.12"
+    }
+)
+retrieved_models: List[markov.Model] = markov.Model.get_models_by_metadata({"tag": "latest"})
+
+

@@ -1,5 +1,6 @@
 """
 Steps to run the End to End Workflow for Model Training
+
 If Project/model name exist in MarkovML App,then they will be fetched.
 Otherwise new Project and Model will be created
 Steps to get the Project name
@@ -14,6 +15,7 @@ Steps to get the Model name
     * Choose a model name for your model
     * A new model will be created with this name if it doesn't exist
     * If a model with the same name already exists, we will use that one
+
 MODEL_NAME = "Pytorch News Classifier"
 Once we successfully run the custom model, we can check it out on the UI
     * Go to URL:https://app.markovml.com
@@ -64,8 +66,8 @@ schema, samples = infer_schema_and_samples_from_dataframe(sample_input)
 # This is your inference pipeline
 my_inference_model = InferencePipeline(
     name="pytorch-text-classifier-demo",
-    schema=schema,
-    samples=samples,
+    schema=schema,    # mandatory
+    samples=samples,  # optional
 )
 
 
@@ -85,12 +87,19 @@ def get_current_directory_path():
 
 # Add stages to the Inference Pipeline
 my_inference_model.add_pipeline_stage(
+    stage=MarkovPyfunc(
+        name="preprocess", pyfunc=model._dataset_handler.process_text
+    )
+).add_pipeline_stage(
     stage=MarkovPredictor(
         name="pytorch_predictor", model=model, flavour=MarkovSupportedFlavours.PYTORCH
     )
 ).add_pipeline_stage(
     stage=MarkovPyfunc(name="post_process", pyfunc=post_process)
-).add_pip_requirements(
+)
+
+# Optional
+my_inference_model.add_pip_requirements(
     pytorch_pip_requirements()
 ).add_dependent_code(
     code_paths=[os.path.join(get_current_directory_path(), 'train_model.py')]
@@ -152,4 +161,4 @@ mkv_model = get_or_create_model(
 mkv_model.register()  # this registers the model metadata with MarkovML
 
 # register the model artifact (YOUR TRAINED MODEL)
-my_inference_model.register(model_id=mkv_model.model_id)
+my_inference_model.register(model_id=mkv_model.model_id)   # feedback: if you don't provide model-id, create new model
