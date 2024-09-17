@@ -23,4 +23,4 @@ df = pandas.DataFrame(
     }]
 )
 
-loaded_inference_pipeline.predict(df)
+print(loaded_inference_pipeline.predict(df))
