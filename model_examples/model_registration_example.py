@@ -43,7 +43,7 @@ from markov.api.models.artifacts.base import (
 from markov.api.models.artifacts.inference_pipeline import InferencePipeline
 from markov.library.dependencies_helper import pytorch_pip_requirements
 from markov.library.mlflow_helper import MarkovSupportedFlavours
-from train_model import get_trained_model
+from train_model import get_trained_model, dataset_handler
 
 # code to train the model. In the example we have sample code to train a model in `train_model.py`
 
@@ -73,6 +73,16 @@ my_inference_model = InferencePipeline(
 
 # This is an `optional step`. This is required if you want to do any post-processing on top
 # of your model inference. For example, your model is returning 0/1, and you want to map it to NEGATIVE/POSITIVE
+def preprocess_input(df):
+    # Note we are assuming `content` column is present in the input df
+    raw_text = df["content"].values.tolist()[0]
+    preprocessed = torch.tensor(
+        dataset_handler.process_text(raw_text), dtype=torch.int64
+    )
+    model_input = preprocessed.numpy()
+    torch.no_grad().__enter__()
+    return model_input
+
 def post_process(prediction):
     ag_news_label = {1: "World", 2: "Sports", 3: "Business", 4: "Sci/Tec"}
     prediction_int = prediction.argmax(1).item() + 1
@@ -87,6 +97,8 @@ def get_current_directory_path():
 
 # Add stages to the Inference Pipeline
 my_inference_model.add_pipeline_stage(
+    stage=MarkovPyfunc(name="pre_process", pyfunc=preprocess_input)
+).add_pipeline_stage(
     stage=MarkovPredictor(
         name="pytorch_predictor", model=model, flavour=MarkovSupportedFlavours.PYTORCH
     )
