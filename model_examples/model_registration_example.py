@@ -51,7 +51,8 @@ from train_model import get_trained_model, dataset_handler
 
 # This is the code to train your custom-model. In this example we have trained a custom model on AG NEWS data .
 # The code is in `train_model.py` file in the model_examples folder
-model = get_trained_model()
+def get_model():
+    return get_trained_model()
 
 # To create a model app you'll need to provide samples from your test/train set.
 # You can sample some rows from your test/train dataframe to register with MarkovML.
@@ -101,7 +102,7 @@ my_inference_model.add_pipeline_stage(
     stage=MarkovPyfunc(name="pre_process", pyfunc=preprocess_input)
 ).add_pipeline_stage(
     stage=MarkovPredictor(
-        name="pytorch_predictor", model=model, flavour=MarkovSupportedFlavours.PYTORCH
+        name="pytorch_predictor", model=get_model(), flavour=MarkovSupportedFlavours.PYTORCH
     )
 ).add_pipeline_stage(
     stage=MarkovPyfunc(name="post_process", pyfunc=post_process)
