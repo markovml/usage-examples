@@ -109,9 +109,13 @@ my_inference_model.add_pipeline_stage(
 
 # Optional
 my_inference_model.add_pip_requirements(
-    pytorch_pip_requirements()     # this will package the requirements (along with their version) with the model / load_inference_pipeline will install these requirements
+    pytorch_pip_requirements()    
+    # this will package the requirements (along with their version) with the model
+    # load_inference_pipeline will install these requirements
 ).add_dependent_code(
-    code_paths=[os.path.join(get_current_directory_path(), 'train_model.py')]  # this will package the dependent code along with the model / load_inference_pipeline will place these files in PYTHONPATH
+    code_paths=[os.path.join(get_current_directory_path(), 'train_model.py')]  
+    # this will package the dependent code along with the model 
+    # load_inference_pipeline will place these files in PYTHONPATH
 )
 
 
