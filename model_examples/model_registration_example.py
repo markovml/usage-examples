@@ -81,7 +81,7 @@ def post_process(prediction):
 
 def get_current_directory_path():
     from inspect import getsourcefile
-    directory_path = os.path.basename(os.path.abspath(getsourcefile(lambda : 0)))
+    directory_path = os.path.dirname(os.path.abspath(getsourcefile(lambda : 0)))
     return directory_path
 
 
