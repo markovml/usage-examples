@@ -1,4 +1,4 @@
-torch==2.1.0
+torch==2.2.0
 torchdata==0.7.0
 torchtext==0.16.0
 portalocker==2.7.0
